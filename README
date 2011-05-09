@@ -1,3 +1,9 @@
 This is a suite of Perl modules intended for personal use.
 
 Some of these modules are likely to be submitted to CPAN, some are not.
+
+Installation:
+	
+	git submodule add git@github.com:hash-bang/MCPerl.git MC
+
+Will create a folder called 'MC' containing all Perl modules in this repository.
