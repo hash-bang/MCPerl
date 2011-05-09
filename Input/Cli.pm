@@ -10,7 +10,7 @@ Input::Cli - Simple CLI based input for command line interface programming
 	say(1, "Verbose greetings only");
 	say(2, "Debug level greetings!");
 
-	print "Yey" if ask("Are you happy?");
+	say(0, "Yey") if ask("Are you happy?");
 
 	if (ask("Heads or tails?", 'h', qw/h t/) eq 'h') {
 		say(0, "You chose heads");
@@ -22,7 +22,7 @@ Input::Cli - Simple CLI based input for command line interface programming
 		say('Ok...');
 	}
 
-	print "Hello " . prompt("What is your name?");
+	say(0, "Hello " . prompt("What is your name?"));
 
 
 =head1 DESCRIPTION
@@ -53,7 +53,7 @@ Internal Term::ReadLine interface
 
 =cut
 
-our $readline = Term::ReadLine->new();
+our $readline = Term::ReadLine->new('Input::Cli');
 
 =item fatal($message)
 
