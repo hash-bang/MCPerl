@@ -28,6 +28,7 @@ Provides a simple multiplexor for projects where the user can choose between dif
 =cut
 
 package Input::Multiplexor;
+use File::Basename qw/basename/;
 our $VERSION = '0.1.0';
 my $dir;
 
@@ -78,6 +79,18 @@ sub load {
 	$package = $self->{dir} . "::$interface";
 	$self = $package->new();
 	return $self;
+}
+
+=item choices()
+
+Returns an array of possible interfaces.
+This equates to pretty much the glob of "$dir/*.pm"
+
+=cut
+sub choices {
+	my ($self) = @_;
+	warn("Directory not specified before choices() call") unless $self->{dir};
+	return map { basename($_, '.pm') } glob($self->{dir} . '/*.pm');
 }
 
 =head1 BUGS
