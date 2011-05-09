@@ -27,7 +27,7 @@ Provides a simple multiplexor for projects where the user can choose between dif
 
 =cut
 
-package Input::Multiplexor;
+package MC::Input::Multiplexor;
 use File::Basename qw/basename/;
 our $VERSION = '0.1.0';
 my $dir;

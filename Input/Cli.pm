@@ -32,7 +32,7 @@ This module exposes a number of useful functions which aids fast scripting for C
 
 =cut
 
-package Input::Cli;
+package MC::Input::Cli;
 our $VERSION = '0.1.1';
 use Term::ReadKey;
 use Term::ReadLine;
