@@ -4,6 +4,19 @@ Some of these modules are likely to be submitted to CPAN, some are not.
 
 Installation:
 	
+	# Will create a folder called 'MC' containing all Perl modules in this repository.
 	git submodule add git@github.com:hash-bang/MCPerl.git MC
+	git submodule update --init
 
-Will create a folder called 'MC' containing all Perl modules in this repository.
+Updating:
+	git submodule pull MC
+
+Makefile:
+	# Dump the following into you root level Makefile
+
+	update:
+		git submodule init MC
+		git submodule update MC
+		cd MC
+		git checkout master
+		git pull
