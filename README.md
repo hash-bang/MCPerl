@@ -20,5 +20,4 @@ Makefile
 Dump the following into the root level Makefile
 
 	update:
-		cd MC
-		git pull
+		cd MC; git pull
