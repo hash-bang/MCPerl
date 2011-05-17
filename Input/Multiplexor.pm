@@ -1,13 +1,13 @@
 =head1 NAME
 
-Input::Multiplexor - Simple multiplexer for user input
+MC::Input::Multiplexor - Simple multiplexer for user input
 
 =head1 SYNOPSIS
 
-	use Input::Multiplexor;
+	use MC::Input::Multiplexor;
 
 	# Allow choices from ui/
-	$interface = Input::Multiplexor('ui');
+	$interface = MC::Input::Multiplexor('ui');
 
 	# Read in the UI to choose from the command line (defaulting to 'auto')
 	my $ui = shift or 'auto';
@@ -35,7 +35,7 @@ my $class_prefix;
 
 =item new($directory = null)
 
-Create a new Input::Multiplexor interface
+Create a new MC::Input::Multiplexor interface
 If $dir is specified it is used as the valid list of interfaces, otherwise use 'dir()'.
 
 =cut
