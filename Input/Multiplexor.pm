@@ -31,6 +31,7 @@ package MC::Input::Multiplexor;
 use File::Basename qw/basename/;
 our $VERSION = '0.1.0';
 my $dir;
+my $class_prefix;
 
 =item new($directory = null)
 
@@ -39,10 +40,11 @@ If $dir is specified it is used as the valid list of interfaces, otherwise use '
 
 =cut
 sub new {
-	my ($class, $dir) = @_;
+	my ($class, $dir, $prefix) = @_;
 	my $self = {};
 	bless $self;
 	$self->dir($dir) if ($dir);
+	$self->prefix($prefix) if ($prefix);
 	return $self;
 }
 
@@ -53,17 +55,50 @@ Specify the directory to lookin for valid interfaces.
 =cut
 sub dir {
 	my ($self, $dir) = @_;
-	use Data::Dump;
 	warn("Invalid directory: $dir") unless -d $dir;
 	$self->{dir} = $dir;
 }
 
-=item become($interface)
+=item class_prefix($prefix = null)
+
+Use a specific prefix when invoking the new() method when using load()
+This is useful if multiplexable module you are wanting to load exists in one directory but requires a prefix to its class name.
+
+Without class_prefix set:
+
+	package MyModule;
+	$multiplexor = MC::Input::Multiplexor->new;
+	$multiplexor->dir('UI');
+	$multiplexor->load('GTK');
+	# Tries to load a module called UI/GTK.pm with the class name UI::GTK;
+
+With class_prefix set:
+
+	package MyModule;
+	$multiplexor = MC::Input::Multiplexor->new;
+	$multiplexor->dir('UI');
+	$multiplexor->class_prefix('MyModule');
+	$multiplexor->load('GTK');
+	# Tries to load a module called UI/GTK.pm with the class name B<MyModule::>UI::GTK;
+
+Or:
+
+	package MyModule;
+	$multiplexor = MC::Input::Multiplexor->new('UI', 'MyModule');
+	$multiplexor->load('GTK');
+
+=cut
+sub class_prefix {
+	my ($self, $cprefix) = @_;
+	$self->{class_prefix} = $cprefix;
+}
+
+=item load($interface)
 
 Attempt to load into the given interface object.
 This must pretain to a valid module in $dir/$Interface.pm (note ucfirst for $interface)
 	
-	$interface = Input::Multiplexor->new('UI');
+	$interface = MC::Input::Multiplexor->new('UI');
 
 	# This will try and load UI/Debug.pm, replacing the original $interface
 	$interface = $interface->load('debug');
@@ -76,7 +111,7 @@ sub load {
 	warn("Invalid interface file: $file for selected interface: $interface") unless -f $file;
 
 	require $file;
-	$package = $self->{dir} . "::$interface";
+	$package = ($self->{class_prefix} ? $self->{class_prefix} . '::' : '') . $self->{dir} . "::$interface";
 	$self = $package->new();
 	return $self;
 }
