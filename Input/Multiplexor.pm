@@ -44,7 +44,7 @@ sub new {
 	my $self = {};
 	bless $self;
 	$self->dir($dir) if ($dir);
-	$self->prefix($prefix) if ($prefix);
+	$self->class_prefix($prefix) if ($prefix);
 	return $self;
 }
 
