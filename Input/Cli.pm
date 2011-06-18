@@ -53,7 +53,10 @@ Internal Term::ReadLine interface
 
 =cut
 
-our $readline = Term::ReadLine->new('Input::Cli');
+our $readline;
+eval { # Prevent Term::ReadLIne fatally exiting if it cant grab a /dev/tty
+	our $readline = Term::ReadLine->new('Input::Cli') or 0;
+};
 
 =item fatal($message)
 
